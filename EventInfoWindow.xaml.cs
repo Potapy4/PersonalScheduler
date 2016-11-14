@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 
@@ -9,7 +10,7 @@ namespace PersonalScheduler
 	/// </summary>
 	public partial class EventInfoWindow : Window
 	{
-		EventManager _eventManager;
+		EventManager _eventManager;        
 
 		public EventInfoWindow(EventManager eventManager)
 		{
@@ -28,14 +29,45 @@ namespace PersonalScheduler
 			// to produce a single DateTime? (nullable DateTime) object. Check that it
 			// is not null before creating a new event
 			var date = GetDateTime();
+            List<NotificationType> notifications = new List<NotificationType>();
 
-			// Create a new scheduled event or regular event here and add it to the event manager
+            if (checkBoxEmail.IsChecked.Value)
+            {
+                notifications.Add(NotificationType.Email);
+            }
 
-			// Event data is inside the following UI controls:
-			// textBoxName, textBoxDescription, textBoxPlace, checkBoxVisual, checkBoxSound,
-			// checkBoxEmail, checkBoxRepeat, textBoxRepeat, comboBoxUnits
+            if (checkBoxSound.IsChecked.Value)
+            {
+                notifications.Add(NotificationType.Sound);
+            }
 
-			DialogResult = true;
+            if (checkBoxVisual.IsChecked.Value)
+            {
+                notifications.Add(NotificationType.Visual);
+            }
+
+            // Create a new scheduled event or regular event here and add it to the event manager
+            try
+            {
+                _eventManager.AddEvent(new ScheduledEvent
+                                       (textBoxName.Text,
+                                        date.Value,
+                                        textBoxDescription.Text,
+                                        textBoxPlace.Text,
+                                        notifications
+                                       ));
+            }
+            catch (Exception ex)
+            {
+               MessageBox.Show(ex.Message);
+                return;
+            }
+
+            // Event data is inside the following UI controls:
+            // textBoxName, textBoxDescription, textBoxPlace, checkBoxVisual, checkBoxSound,
+            // checkBoxEmail, checkBoxRepeat, textBoxRepeat, comboBoxUnits
+
+            DialogResult = true;
 		}
 
 		#region Template code - don't change it

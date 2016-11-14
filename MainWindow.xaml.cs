@@ -14,7 +14,7 @@ namespace PersonalScheduler
 	public partial class MainWindow : Window
 	{
 		EventManager _eventManager;
-		
+        public delegate void EventManagerChanged();       
 
 		public MainWindow()
 		{
@@ -22,20 +22,26 @@ namespace PersonalScheduler
 
 			_eventManager = new EventManager();
 
-			// Assign event handlers here, so that event listbox is kept in sync
-			// with the list inside _eventManager
+            // Assign event handlers here, so that event listbox is kept in sync
+            // with the list inside _eventManager
 
-
-			//
-
+            _eventManager.onAdd += UpdateUI;
+            _eventManager.onDelete += UpdateUI;
+			
 			// The following function initializes a one-second regular timer, the handler will
 			// call _eventManager.ProcessEvents - check template code below
 			SetupTimer();
 		}
 
-		#region TemplateCode
+        private void UpdateUI()
+        {
+            listBoxEvents.Items.Clear();
+            _eventManager.ScheduledEvents.ForEach(x => listBoxEvents.Items.Add(x));            
+        }
 
-		DispatcherTimer _timer;
+        #region TemplateCode
+
+        DispatcherTimer _timer;
 
 		private void SetupTimer()
 		{
@@ -53,14 +59,16 @@ namespace PersonalScheduler
 
 		private void buttonRemove_Click(object sender, RoutedEventArgs e)
 		{
-			if (listBoxEvents.SelectedItem != null)
-				_eventManager.RemoveEvent(listBoxEvents.SelectedItem as ScheduledEvent);
+            if (listBoxEvents.SelectedItem != null)
+            {               
+               _eventManager.RemoveEvent(listBoxEvents.SelectedItem as ScheduledEvent);
+            }
 		}
 
 		private void Timer_Tick(object sender, EventArgs e)
 		{
 			_eventManager.ProcessEvents();
-		}
+        }
 
 		bool _finalShutdown = false;
 		bool _firstTimeHint = true;
