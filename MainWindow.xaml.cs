@@ -13,8 +13,7 @@ namespace PersonalScheduler
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		EventManager _eventManager;
-        public delegate void EventManagerChanged();       
+		EventManager _eventManager;       
 
 		public MainWindow()
 		{
@@ -36,7 +35,7 @@ namespace PersonalScheduler
         private void UpdateUI()
         {
             listBoxEvents.Items.Clear();
-            _eventManager.ScheduledEvents.ForEach(x => listBoxEvents.Items.Add(x));            
+            _eventManager.ScheduledEvents.ForEach(x => listBoxEvents.Items.Add(x));
         }
 
         #region TemplateCode

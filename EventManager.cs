@@ -10,9 +10,9 @@ namespace PersonalScheduler
     {
         private List<ScheduledEvent> _events = new List<ScheduledEvent>();
         public List<ScheduledEvent> ScheduledEvents { get { return _events; } }
-
-        public event MainWindow.EventManagerChanged onAdd;
-        public event MainWindow.EventManagerChanged onDelete;
+       
+        public event Action onAdd;
+        public event Action onDelete;
 
         private static Notifiers.VisualNotifier visual = new Notifiers.VisualNotifier();
         private static Notifiers.SoundNotifier sound = new Notifiers.SoundNotifier();
