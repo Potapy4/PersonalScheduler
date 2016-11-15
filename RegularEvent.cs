@@ -13,6 +13,11 @@ namespace PersonalScheduler
                 throw new ArgumentException("Interval must be more than 5 minutes for Email notification");
             }
 
+            if (interval <= 0)
+            {
+                throw new ArgumentException("Interval must be more than 0");
+            }
+
             switch (repeatType)
             {
                 case RepeatType.Minutes:
