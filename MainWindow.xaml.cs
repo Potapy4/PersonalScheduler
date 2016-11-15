@@ -66,7 +66,14 @@ namespace PersonalScheduler
 
 		private void Timer_Tick(object sender, EventArgs e)
 		{
-			_eventManager.ProcessEvents();
+            try
+            {
+                _eventManager.ProcessEvents();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
 		bool _finalShutdown = false;

@@ -11,12 +11,9 @@ namespace PersonalScheduler
         private List<ScheduledEvent> _events = new List<ScheduledEvent>();
         private static List<ScheduledEvent> _toRemove = new List<ScheduledEvent>();
         public List<ScheduledEvent> ScheduledEvents { get { return _events; } }
-       
+
         public event Action onAdd;
         public event Action onDelete;
-
-        private static Notifiers.VisualNotifier visual = new Notifiers.VisualNotifier();
-        private static Notifiers.SoundNotifier sound = new Notifiers.SoundNotifier();       
 
         public void ProcessEvents()
         {
@@ -31,18 +28,24 @@ namespace PersonalScheduler
 
                     if (scheduledEvent.Notifications.Contains(NotificationType.Sound))
                     {
-                        sound.Notify();
+                        new Notifiers.SoundNotifier().Notify();
                     }
 
                     if (scheduledEvent.Notifications.Contains(NotificationType.Visual))
                     {
-                        visual.Notify(scheduledEvent);
+                        new Notifiers.VisualNotifier().Notify(scheduledEvent);
                     }
 
                     if (scheduledEvent.Notifications.Contains(NotificationType.Email))
                     {
-                        Notifiers.EmailNotifier email = new Notifiers.EmailNotifier("receiver@email");
-                        email.Notify(scheduledEvent);
+                        try
+                        {
+                            new Notifiers.EmailNotifier("receiver@email").Notify(scheduledEvent);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
                     }
                 }
             }
@@ -59,7 +62,7 @@ namespace PersonalScheduler
             }
 
             _events.Add(ev);
-            _events =_events.OrderBy(x => x.DateTime).ToList();
+            _events = _events.OrderBy(x => x.DateTime).ToList();
             onAdd();
         }
 
