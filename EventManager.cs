@@ -9,33 +9,45 @@ namespace PersonalScheduler
     public class EventManager
     {
         private List<ScheduledEvent> _events = new List<ScheduledEvent>();
+        private static List<ScheduledEvent> _toRemove = new List<ScheduledEvent>();
         public List<ScheduledEvent> ScheduledEvents { get { return _events; } }
        
         public event Action onAdd;
         public event Action onDelete;
 
         private static Notifiers.VisualNotifier visual = new Notifiers.VisualNotifier();
-        private static Notifiers.SoundNotifier sound = new Notifiers.SoundNotifier();
+        private static Notifiers.SoundNotifier sound = new Notifiers.SoundNotifier();       
 
         public void ProcessEvents()
         {
-            DateTime dateNow = DateTime.Now;           
+            DateTime dateNow = DateTime.Now;
+            _toRemove.Clear();
 
-            foreach (var i in _events)
+            foreach (ScheduledEvent scheduledEvent in _events)
             {
-                if (dateNow >= i.DateTime)
+                if (dateNow >= scheduledEvent.DateTime)
                 {
-                    if (i.Notifications.Contains(NotificationType.Sound))
+                    _toRemove.Add(scheduledEvent);
+
+                    if (scheduledEvent.Notifications.Contains(NotificationType.Sound))
                     {
                         sound.Notify();
                     }
 
-                    if (i.Notifications.Contains(NotificationType.Visual))
+                    if (scheduledEvent.Notifications.Contains(NotificationType.Visual))
                     {
-                        visual.Notify(i);
+                        visual.Notify(scheduledEvent);
+                    }
+
+                    if (scheduledEvent.Notifications.Contains(NotificationType.Email))
+                    {
+                        Notifiers.EmailNotifier email = new Notifiers.EmailNotifier("receiver@email");
+                        email.Notify(scheduledEvent);
                     }
                 }
             }
+
+            _toRemove.ForEach((x) => RemoveEvent(x));
         }
 
         public void AddEvent(ScheduledEvent ev)

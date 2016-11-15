@@ -1,12 +1,11 @@
-﻿using System.Windows;
-
-namespace PersonalScheduler.Notifiers
+﻿namespace PersonalScheduler.Notifiers
 {
-	class VisualNotifier
-	{
-		public void Notify(ScheduledEvent ev)
-		{
-			MessageBox.Show("Sample message");
-		}
-	}
+    class VisualNotifier : INotifier
+    {
+        public void Notify(ScheduledEvent ev)
+        {
+            VisualNotificationWindow window = new VisualNotificationWindow(ev);
+            window.Show();
+        }
+    }
 }

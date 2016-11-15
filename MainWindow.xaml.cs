@@ -35,7 +35,7 @@ namespace PersonalScheduler
         private void UpdateUI()
         {
             listBoxEvents.Items.Clear();
-            _eventManager.ScheduledEvents.ForEach(x => listBoxEvents.Items.Add(x));
+            _eventManager.ScheduledEvents.ForEach(x => listBoxEvents.Items.Add(x));            
         }
 
         #region TemplateCode
@@ -99,7 +99,6 @@ namespace PersonalScheduler
 			Show();
 			taskBarIcon.Visibility = Visibility.Hidden;
 		}
-		#endregion
-
-	}
+        #endregion
+    }
 }
