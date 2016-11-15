@@ -10,16 +10,23 @@ namespace PersonalScheduler
         Visual
     }
 
+    public enum RepeatType
+    {
+        Minutes,
+        Hours,
+        Days
+    }
+
     public class ScheduledEvent
     {
-        private readonly string _name;
-        private readonly DateTime _datetime;
-        private readonly string _description;
-        private readonly string _place;
-        private readonly List<NotificationType> _notifications;
+        protected readonly string _name;
+        protected DateTime _datetime;
+        protected readonly string _description;
+        protected readonly string _place;
+        protected readonly List<NotificationType> _notifications;
 
         public string Name { get { return _name; } }
-        public DateTime DateTime { get { return _datetime; } }
+        public DateTime DateTime { get { return _datetime; } private set { _datetime = value; } }
         public string Description { get { return _description; } }
         public string Place { get { return _place; } }
         public List<NotificationType> Notifications { get { return _notifications; } }

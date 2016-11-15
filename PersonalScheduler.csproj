@@ -63,6 +63,7 @@
     </ApplicationDefinition>
     <Compile Include="Notifiers\EmailNotifier.cs" />
     <Compile Include="Notifiers\INotifier.cs" />
+    <Compile Include="RegularEvent.cs" />
     <Compile Include="VisualNotificationWindow.xaml.cs">
       <DependentUpon>VisualNotificationWindow.xaml</DependentUpon>
     </Compile>

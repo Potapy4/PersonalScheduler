@@ -21,9 +21,7 @@ namespace PersonalScheduler
             foreach (ScheduledEvent scheduledEvent in _events)
             {
                 if (dateNow >= scheduledEvent.DateTime)
-                {
-                    _toRemove.Add(scheduledEvent);
-
+                {                  
                     if (scheduledEvent.Notifications.Contains(NotificationType.Sound))
                     {
                         new Notifiers.SoundNotifier().Notify();
@@ -44,6 +42,17 @@ namespace PersonalScheduler
                         {
                             throw ex;
                         }
+                    }
+
+                    if (scheduledEvent is RegularEvent)
+                    {
+                        RegularEvent regularEvent = scheduledEvent as RegularEvent;
+                        regularEvent.Update();
+                        onAdd(); // to update time in listbox for repeat interval
+                    }
+                    else
+                    {
+                        _toRemove.Add(scheduledEvent);
                     }
                 }
             }

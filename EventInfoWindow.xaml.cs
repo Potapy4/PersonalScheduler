@@ -52,13 +52,28 @@ namespace PersonalScheduler
                 // Create a new scheduled event or regular event here and add it to the event manager
                 try
                 {
-                    _eventManager.AddEvent(new ScheduledEvent
-                                           (textBoxName.Text,
-                                            date.Value,
-                                            textBoxDescription.Text,
-                                            textBoxPlace.Text,
-                                            notifications
-                                           ));
+                    if (!checkBoxRepeat.IsChecked.Value)
+                    {
+                        _eventManager.AddEvent(new ScheduledEvent
+                                               (textBoxName.Text,
+                                                date.Value,
+                                                textBoxDescription.Text,
+                                                textBoxPlace.Text,
+                                                notifications
+                                               ));
+                    }
+                    else
+                    {
+                        _eventManager.AddEvent(new RegularEvent
+                                               (textBoxName.Text,
+                                                date.Value,
+                                                textBoxDescription.Text,
+                                                textBoxPlace.Text,
+                                                notifications,
+                                                (RepeatType)comboBoxUnits.SelectedIndex,
+                                                Int32.Parse(textBoxRepeat.Text)
+                                               ));
+                    }
                 }
                 catch (Exception ex)
                 {
