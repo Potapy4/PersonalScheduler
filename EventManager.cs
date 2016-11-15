@@ -62,8 +62,8 @@ namespace PersonalScheduler
 
         public void AddEvent(ScheduledEvent ev)
         {
-            IEnumerable<ScheduledEvent> res = _events.Where(x => x.Name == ev.Name);
-            if (res.Count() > 0)
+            bool isNotUnique = Convert.ToBoolean(_events.Count((x => x.Name == ev.Name)));
+            if (isNotUnique)
             {
                 throw new ArgumentException("Name can be unique");
             }
