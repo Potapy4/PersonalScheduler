@@ -1,7 +1,7 @@
 # Personal Scheduler
 ## This is a freelance project
 
-###1. Introduction:
+### 1. Introduction:
 
 The goal of this assignment is to practice skills related to the following topics:
 * Mutable and immutable objects
@@ -22,9 +22,9 @@ The application allows to manage important events and to make notifications abou
 * **VisualNotifier** - a notifier class responsible for showing visual messages - the current implementation is a temporary one, you will need to change it.
 * **SoundNotifier** - a notifier class responsible for playing a standard system sound, the implementation can be kept as it is.
 
-Two of the window classes contain a "TemplateCode" region - you can unfold it to look through the implementation details but you don’t need to change them.
+Two of the window classes contain a "TemplateCode" region - you can unfold it to look through the implementation details but you donâ€™t need to change them.
 
-###2.Description of tasks:
+### 2.Description of tasks:
 
 **1.**(1.5 points) Add the following properties to the "ScheduledEvent" class:
 * Name (string)
@@ -42,7 +42,7 @@ The following restrictions on ScheduledEvent data are imposed:
 
 A class should contain a single constructor, accepting all parameters in the same order as the properties are listed above.
 
-**2.**Navigate to the "EventManager" class, which is designed to store and manage a list of events. Add a private field of the standard List type to store all scheduled events. **The list should always be sorted by event datetime in ascending order.**
+**2.** Navigate to the "EventManager" class, which is designed to store and manage a list of events. Add a private field of the standard List type to store all scheduled events. **The list should always be sorted by event datetime in ascending order.**
 
 **3.**(1.5 points) Implement the AddEvent method of the EventManager class. It should insert the new event to an appropriate position in the event list, so that the sorted order is kept. In addition the method should check for event duplicates (by name), in case a matching event is found, an ArgumentException should be raised with an appropriate message. Exception handling should be performed in UI-related classes. Implement the RemoveEvent method.
 
@@ -65,7 +65,7 @@ When a regular event is fired, apart from issuing all necessary notifications th
 
 **7.**(1 point) Check online resources explaining how a C# application can send emails. Add a new EmailNotifier class to the project. The target email address, to which email notifications will be sent, should be passed in the class constructor. **Before submitting your solution make sure you delete all personal data from the application code, e.g. email account username and password.**
 
-###Extra requirements and recommendations:
+### Extra requirements and recommendations:
 * In the final implementation the EventManager should not have direct references to either the Notifier classes or the RegularEvent class derived from ScheduledEvent. The exact way of how you remove these references does not matter.
-* Apart from a single exception (see p. 5 of tasks), don’t change signatures (names, return types, parameters) of existing methods.
+* Apart from a single exception (see p. 5 of tasks), donâ€™t change signatures (names, return types, parameters) of existing methods.
 * All exceptions that you add to the model / logic classes as well as possible standard exceptions (e.g. converting from string to int) have to be handled inside the UI. The application should not crash because of the user entering incorrect data.
